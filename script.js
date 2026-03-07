@@ -12,6 +12,7 @@ document.getElementById("login-btn")
         window.location.assign("./home.html")
     }else{
         alert("Please input right ")
+        return  
     }
     
 })
