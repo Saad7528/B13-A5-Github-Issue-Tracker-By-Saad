@@ -1,7 +1,7 @@
 // Log-in button script
-document.getElementById("login-btn")
-.addEventListener('click', function () {
-    console.log("saad")
+const loginBtn = document.getElementById("login-btn")
+loginBtn.addEventListener('click', function () {
+    // console.log("saad")
     const userName = document.getElementById("username")
     const passWord = document.getElementById("password")
     // console.log(userName,passWord)
@@ -16,3 +16,4 @@ document.getElementById("login-btn")
     }
     
 })
+
