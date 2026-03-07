@@ -1,8 +1,4 @@
 // Home 
-// const statusBtns = document.getElementById("status-btn-container");
-// statusBtns.addEventListener('click', function (event) {
-//     console.log(event)
-// })
 
 const activeBtn = ["btn-primary", "text-white"]
 // const deactivateBtn = ["btn"]
@@ -21,3 +17,5 @@ function switchBtn(btn){
         }
     });
 }
+
+// const load
