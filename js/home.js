@@ -1,6 +1,7 @@
 const cardContainer = document.getElementById("card-container")
 const issueCount = document.getElementById("issue-count")
 const dataLoading = document.getElementById("loading")
+const empty = document.getElementById("empty")
 
 
 
@@ -16,12 +17,24 @@ document.getElementById("btn-search").addEventListener('click', ()=>{
     //  displayData(data.data)
     // })
     async function search(sInput) {
+        loading(true)
         const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${sInput}`)
         const data = await res.json();
         console.log(sInput)
         
         displayData(data.data)
         issueCount.innerText = data.data.length;
+        loading(false)
+
+        if (issueCount.innerText == "0"){
+            empty.classList.remove("hidden")
+            cardContainer.classList.add("hidden")
+        }else{
+            empty.classList.add("hidden")
+            cardContainer.classList.remove("hidden")
+        }    
+
+        
         
     }
 })
