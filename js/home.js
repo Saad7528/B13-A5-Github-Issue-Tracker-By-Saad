@@ -1,9 +1,20 @@
 const cardContainer = document.getElementById("card-container")
 const issueCount = document.getElementById("issue-count")
+const dataLoading = document.getElementById("loading")
 
 const activeBtn = ["btn-primary", "text-white"]
 
 
+
+function loading(status){
+    if(status == true){
+        dataLoading.classList.remove("hidden")
+        cardContainer.classList.add("hidden")
+    }else{
+        dataLoading.classList.add("hidden")
+        cardContainer.classList.remove("hidden")
+    }
+}
 
 function switchBtn(btn){
     // console.log(btn);
@@ -29,14 +40,17 @@ function switchBtn(btn){
 
 // Data Load For ALL Button
 async function loadData() {
+    loading(true)
     const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues ")
     const data = await res.json();
     issueCount.innerText = data.data.length;
 
     displayData(data.data);
+    loading(false)
 }
 // Data Load For Open Button
 async function loadOpenData() {
+    loading(true)
     const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues ")
     const data = await res.json();
     const dataArray = data.data
@@ -44,9 +58,11 @@ async function loadOpenData() {
     issueCount.innerText = openData.length;
     
     displayData(openData);
+    loading(false)
 }
 // Data Load For Closed Button
 async function loadClosedData() {
+    loading(true)
     const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues ")
     const data = await res.json();
     const dataArray = data.data
@@ -54,6 +70,7 @@ async function loadClosedData() {
     issueCount.innerText = closeData.length;
     
     displayData(closeData);
+    loading(false)
 }
 
 function displayData(dataArray) {

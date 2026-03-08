@@ -81,10 +81,15 @@
                 </div>
                 
             </div>
-            <hr>
+
+            <hr class="text-gray-400 my-5">
             
             <!-- Card Container Dynamic -->
-            <div id="card-container" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
+             <div id="loading" class="hidden flex justify-center items-center h-40">
+                <span class="loading loading-bars loading-xl"></span>
+             </div>
+
+             <div id="card-container" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
 
                 <!-- Dynamically added -->  
                 <!-- <div id="card" class="card card-body border-t-4 border-[#00A96E] shadow-lg space-y-3 p-4">
