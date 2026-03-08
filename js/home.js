@@ -2,10 +2,34 @@ const cardContainer = document.getElementById("card-container")
 const issueCount = document.getElementById("issue-count")
 const dataLoading = document.getElementById("loading")
 
+
+
+// Search Button 
+document.getElementById("btn-search").addEventListener('click', ()=>{
+    const input = document.getElementById("search-input")
+    const searchInput = input.value.trim().toLowerCase();
+    search(searchInput);
+
+    // fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchInput}`)
+    // .then( res => res.json())
+    // .then(data => {
+    //  displayData(data.data)
+    // })
+    async function search(sInput) {
+        const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${sInput}`)
+        const data = await res.json();
+        console.log(sInput)
+        
+        displayData(data.data)
+        issueCount.innerText = data.data.length;
+        
+    }
+})
+
+// Button Classes
 const activeBtn = ["btn-primary", "text-white"]
 
-
-
+// Loading function
 function loading(status){
     if(status == true){
         dataLoading.classList.remove("hidden")
@@ -16,8 +40,8 @@ function loading(status){
     }
 }
 
+// Load Data For All, Open, Closed Button
 function switchBtn(btn){
-    // console.log(btn);
     const btnName = ['all', 'open', 'close'];
     btnName.forEach(element => {
         const btnN = document.getElementById(element+"-btn")
@@ -38,7 +62,7 @@ function switchBtn(btn){
     });
 }
 
-// Data Load For ALL Button
+// Data Load Function For ALL Button
 async function loadData() {
     loading(true)
     const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues ")
@@ -48,7 +72,7 @@ async function loadData() {
     displayData(data.data);
     loading(false)
 }
-// Data Load For Open Button
+// Data Load Function For Open Button
 async function loadOpenData() {
     loading(true)
     const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues ")
@@ -60,7 +84,7 @@ async function loadOpenData() {
     displayData(openData);
     loading(false)
 }
-// Data Load For Closed Button
+// Data Load Function For Closed Button
 async function loadClosedData() {
     loading(true)
     const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues ")
@@ -73,6 +97,7 @@ async function loadClosedData() {
     loading(false)
 }
 
+// Display Function
 function displayData(dataArray) {
     // console.log(dataArray);
     cardContainer.innerHTML = "";
