@@ -46,7 +46,7 @@
 
     <main class="">
         <!-- Section Tab Button -->
-        <div class="w-9/12 mx-auto mt-14 p-6 bg-white card card-body shadow-2xl">
+        <div class="w-10/12 mx-auto mt-14 p-6 bg-white card card-body shadow-2xl">
             <div id="status-btn-container" class="space-x-2">
                 <button id="all-btn" onclick="switchBtn('all')" class="btn cursor-pointer btn-primary w-28 ">All</button>
                 <button id="open-btn" onclick="switchBtn('open')" class="btn cursor-pointer w-28">Open</button>
@@ -55,7 +55,7 @@
         </div>
 
         <!-- Issue And Status Info -->
-        <section class="w-9/12 mx-auto mt-4 p-6 bg-white card card-body shadow-2xl">
+        <section class="w-10/12 mx-auto mt-4 p-6 bg-white card card-body shadow-2xl">
             <!-- Issue -->
             <div class="flex justify-between items-center">
                 <div class="flex items-center gap-2">
@@ -84,13 +84,13 @@
             <hr>
             
             <!-- Card Container Dynamic -->
-            <div id="card-container" class="grid grid-cols-4 gap-5">
+            <div id="card-container" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
 
                 <!-- Dynamically added -->  
                 <!-- <div id="card" class="card card-body border-t-4 border-[#00A96E] shadow-lg space-y-3 p-4">
 
                     <div id="top-status" class="flex justify-between items-center">
-                        <img src="./assets/Open-Status.png" alt="">
+                        <img src="./assets/Closed-Status.png" alt="">
                         <h2 class="bg-[#FEECEC] px-6 py-1.5 rounded-full text-[#EF4444] uppercase font-medium">HIGH</h2>
                     </div>
 
