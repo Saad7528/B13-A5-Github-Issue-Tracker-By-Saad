@@ -1,15 +1,16 @@
-// Home 
 const cardContainer = document.getElementById("card-container")
+const issueCount = document.getElementById("issue-count")
 
 const activeBtn = ["btn-primary", "text-white"]
-// const deactivateBtn = ["btn"]
+
+
 
 function switchBtn(btn){
     // console.log(btn);
     const btnName = ['all', 'open', 'close'];
     btnName.forEach(element => {
         const btnN = document.getElementById(element+"-btn")
-        console.log(btnN);
+        // console.log(btnN);
 
         if(element === btn){
             btnN.classList.add(...activeBtn)
@@ -17,7 +18,6 @@ function switchBtn(btn){
                 loadOpenData()
             }else if (btn == "close") {
                 loadClosedData()
-                console.log("object");
             }else {
                 loadData()
             }
@@ -31,6 +31,7 @@ function switchBtn(btn){
 async function loadData() {
     const res = await fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues ")
     const data = await res.json();
+    issueCount.innerText = data.data.length;
 
     displayData(data.data);
 }
@@ -40,6 +41,7 @@ async function loadOpenData() {
     const data = await res.json();
     const dataArray = data.data
     let openData = dataArray.filter(item => item.status == "open")
+    issueCount.innerText = openData.length;
     
     displayData(openData);
 }
@@ -49,24 +51,15 @@ async function loadClosedData() {
     const data = await res.json();
     const dataArray = data.data
     let closeData = dataArray.filter(item => item.status == "closed")
+    issueCount.innerText = closeData.length;
     
     displayData(closeData);
 }
 
-
-
-
-
-
-
-
-
 function displayData(dataArray) {
     // console.log(dataArray);
-    const issueCount = document.getElementById("issue-count")
     cardContainer.innerHTML = "";
     
-    // const label2 = document.getElementById("ppp")
     dataArray.forEach( item => {
         const cardDiv = document.createElement("div")
         cardDiv.innerHTML = `
@@ -127,6 +120,6 @@ ${item.priority == "low" ?
                         `
         cardContainer.appendChild(cardDiv)
     })
-    // issueCount.innerText = cardContainer.length;
+    
 }
 loadData()
