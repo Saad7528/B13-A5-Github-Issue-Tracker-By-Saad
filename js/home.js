@@ -3,6 +3,7 @@ const issueCount = document.getElementById("issue-count")
 const dataLoading = document.getElementById("loading")
 const empty = document.getElementById("empty")
 
+
 function checkEmptyIssue() {
     if (issueCount.innerText == "0"){
             empty.classList.remove("hidden")
@@ -193,27 +194,40 @@ function displayData(dataArray) {
     dataArray.forEach( item => {
         const cardDiv = document.createElement("div")
         cardDiv.innerHTML = `
-${item.priority == "low" ? 
+${item.status == "open" ? 
+    `<div id="card" onclick="modalIdLoad(${item.id})" class="card card-body border-t-4 border-[#00A96E] shadow-lg space-y-3 p-4">
+        
+                    <div id="top-status" class="flex justify-between items-center">
+                    <img src="./assets/Open-Status.png" alt="">
+         ${item.priority == "low" ? 
+                    `
+                    <h2 class="bg-[#EEEFF2] px-6 py-1.5 rounded-full text-[#9CA3AF] uppercase font-medium">${item.priority}</h2>
+                    ` :
+    item.priority == "medium" ? 
+                    `
+                    <h2 class="bg-[#FFF6D1] px-6 py-1.5 rounded-full text-[#F59E0B] uppercase font-medium">${item.priority}</h2>
+                    ` :
+                    `
+                    <h2 class="bg-[#FEECEC] px-6 py-1.5 rounded-full text-[#EF4444] uppercase font-medium">${item.priority}</h2>
+                    `}
+                    </div>` : 
     `<div id="card" onclick="modalIdLoad(${item.id})" class="card card-body border-t-4 border-[#A855F7] shadow-lg space-y-3 p-4">
         
                     <div id="top-status" class="flex justify-between items-center">
                     <img src="./assets/Closed-Status.png" alt="">
+         ${item.priority == "low" ? 
+                    `
                     <h2 class="bg-[#EEEFF2] px-6 py-1.5 rounded-full text-[#9CA3AF] uppercase font-medium">${item.priority}</h2>
-                    </div>` :
-item.priority == "medium" ? 
-    `<div id="card" onclick="modalIdLoad(${item.id})" class="card card-body border-t-4 border-[#00A96E] shadow-lg space-y-3 p-4">
-        
-                    <div id="top-status" class="flex justify-between items-center">
-                    <img src="./assets/Open-Status.png" alt="">
+                    ` :
+    item.priority == "medium" ? 
+                    `
                     <h2 class="bg-[#FFF6D1] px-6 py-1.5 rounded-full text-[#F59E0B] uppercase font-medium">${item.priority}</h2>
-                    </div>` :
-    `<div id="card" onclick="modalIdLoad(${item.id})" class="card card-body border-t-4 border-[#00A96E] shadow-lg space-y-3 p-4">
-        
-                    <div id="top-status" class="flex justify-between items-center">
-                    <img src="./assets/Open-Status.png" alt="">
+                    ` :
+                    `
                     <h2 class="bg-[#FEECEC] px-6 py-1.5 rounded-full text-[#EF4444] uppercase font-medium">${item.priority}</h2>
+                    `}
                     </div>`}
-
+        
 
                     <div>
                     <h2 class="text-base font-semibold text-[#1F2937]">${item.title}</h2>
@@ -260,3 +274,43 @@ item.priority == "medium" ?
     
 }
 loadData()
+
+
+// ${item.priority == "low" ? 
+//     `<div id="card" onclick="modalIdLoad(${item.id})" class="card card-body border-t-4 border-[#A855F7] shadow-lg space-y-3 p-4">
+        
+//                     <div id="top-status" class="flex justify-between items-center">
+//                     <img src="./assets/Closed-Status.png" alt="">
+//                     <h2 class="bg-[#EEEFF2] px-6 py-1.5 rounded-full text-[#9CA3AF] uppercase font-medium">${item.priority}</h2>
+//                     </div>` :
+// item.priority == "medium" ? 
+//     `<div id="card" onclick="modalIdLoad(${item.id})" class="card card-body border-t-4 border-[#00A96E] shadow-lg space-y-3 p-4">
+        
+//                     <div id="top-status" class="flex justify-between items-center">
+//                     <img src="./assets/Open-Status.png" alt="">
+//                     <h2 class="bg-[#FFF6D1] px-6 py-1.5 rounded-full text-[#F59E0B] uppercase font-medium">${item.priority}</h2>
+//                     </div>` :
+//     `<div id="card" onclick="modalIdLoad(${item.id})" class="card card-body border-t-4 border-[#00A96E] shadow-lg space-y-3 p-4">
+        
+//                     <div id="top-status" class="flex justify-between items-center">
+//                     <img src="./assets/Open-Status.png" alt="">
+//                     <h2 class="bg-[#FEECEC] px-6 py-1.5 rounded-full text-[#EF4444] uppercase font-medium">${item.priority}</h2>
+//                     </div>`}
+
+
+
+
+
+
+
+//  ${item.priority == "low" ? 
+//                     `
+//                     <h2 class="bg-[#EEEFF2] px-6 py-1.5 rounded-full text-[#9CA3AF] uppercase font-medium">${item.priority}</h2>
+//                     ` :
+//     item.priority == "medium" ? 
+//                     `
+//                     <h2 class="bg-[#FFF6D1] px-6 py-1.5 rounded-full text-[#F59E0B] uppercase font-medium">${item.priority}</h2>
+//                     ` :
+//                     `
+//                     <h2 class="bg-[#FEECEC] px-6 py-1.5 rounded-full text-[#EF4444] uppercase font-medium">${item.priority}</h2>
+//                     `}
