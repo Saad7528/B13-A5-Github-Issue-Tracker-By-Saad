@@ -3,10 +3,7 @@ const issueCount = document.getElementById("issue-count")
 const dataLoading = document.getElementById("loading")
 const empty = document.getElementById("empty")
 
-
-
-
-function cheakEmptyIssue() {
+function checkEmptyIssue() {
     if (issueCount.innerText == "0"){
             empty.classList.remove("hidden")
             cardContainer.classList.add("hidden")
@@ -16,29 +13,21 @@ function cheakEmptyIssue() {
         }
 }
 
-
 // Search Button 
 document.getElementById("btn-search").addEventListener('click', ()=>{
     const input = document.getElementById("search-input")
     const searchInput = input.value.trim().toLowerCase();
     search(searchInput);
 
-    // fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchInput}`)
-    // .then( res => res.json())
-    // .then(data => {
-    //  displayData(data.data)
-    // })
     async function search(sInput) {
         loading(true)
         const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${sInput}`)
         const data = await res.json();
-        console.log(sInput)
         
         displayData(data.data)
         issueCount.innerText = data.data.length;
         loading(false)
-
-        cheakEmptyIssue()
+        checkEmptyIssue()
         
     }
 })
@@ -87,7 +76,7 @@ async function loadData() {
 
     displayData(data.data);
     loading(false)
-    cheakEmptyIssue()
+    checkEmptyIssue()
     
 }
 // Data Load Function For Open Button
@@ -101,8 +90,9 @@ async function loadOpenData() {
     
     displayData(openData);
     loading(false)
-    cheakEmptyIssue()
+    checkEmptyIssue()
 }
+
 // Data Load Function For Closed Button
 async function loadClosedData() {
     loading(true)
@@ -114,32 +104,28 @@ async function loadClosedData() {
     
     displayData(closeData);
     loading(false)
-    cheakEmptyIssue()
+    checkEmptyIssue()
 }
 
 // Modal Show By Id
  const modalIdLoad= async(id) =>{
-    // loading(true)
     const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`)
-    console.log(id);
     const data = await res.json();
-    // const dataArray = data.data
     displayModal(data.data);
-    // let closeData = dataArray.filter(item => item.status == "closed")
-    // issueCount.innerText = closeData.length;
     
-    // displayData(closeData);
-    // loading(false)
 }
 
+// Display Modal
 const displayModal = (modalData) => {
-    console.log(modalData)
     const detailsBox = document.getElementById("model-details-container")
     const cardModal = document.getElementById("card_modal")
     detailsBox.innerHTML = `
-            <div>
+                <div>
                     <h2 class="text-2xl font-bold">${modalData.title}</h2>
-                    <p class="text-[#64748B] mt-3"> <span class="bg-[#00A96E] text-white rounded-full py-1.5 px-2 capitalize">${modalData.status+'ed'}</span> • <span>Opened by ${modalData.author}</span> • <span>${modalData.createdAt}</span></p>
+${modalData.status == "open" ? 
+                    `<p class="text-[#64748B] mt-3"> <span class="bg-[#00A96E] text-white rounded-full py-1.5 px-2 capitalize">${modalData.status+'ed'}</span> • <span>Opened by ${modalData.author}</span> • <span>${modalData.createdAt}</span></p>` 
+                    :                    
+                    `<p class="text-[#64748B] mt-3"> <span class="bg-[#EEEFF2] text-[#4d4f52] rounded-full py-1.5 px-2 capitalize">${modalData.status+'ed'}</span> • <span>Opened by ${modalData.author}</span> • <span>${modalData.createdAt}</span></p>`}
                 </div>
                 <div class="flex gap-3">
 
@@ -176,12 +162,24 @@ const displayModal = (modalData) => {
                 <div class="flex justify-items-start gap-28 bg-[#F8FAFC] p-4">
                     <div>
                         <p class=" text-[#64748B]">Assignee:</p>
-                        <p class="font-bold text-[#1F2937]">${modalData.assignee}</p>
+                        <p class="font-bold text-[#1F2937]">${modalData.assignee === "" ? "Assin Name not Provided" : modalData.assignee}</p>
                     </div>
-                    <div>
-                        <p class=" text-[#64748B]">Priority:</p>
-                        <h2 class="bg-[#EF4444] px-6 py-1.5 rounded-full text-white uppercase font-medium">HIGH</h2>
-                    </div>
+      
+${modalData.priority == "low" ? 
+                `<div >        
+                    <p class=" text-[#64748B]">Priority:</p>
+                    <h2 class="bg-[#EEEFF2] px-6 py-1.5 rounded-full text-[#9CA3AF] uppercase font-medium">${modalData.priority}</h2>
+               </div>` :
+modalData.priority == "medium" ? 
+                `<div>
+                    <p class=" text-[#64748B]">Priority:</p>
+                    <h2 class="bg-[#FFF6D1] px-6 py-1.5 rounded-full text-[#F59E0B] uppercase font-medium">${modalData.priority}</h2>
+                </div>` :
+                `<div>
+                    <p class=" text-[#64748B]">Priority:</p>
+                    <h2 class="bg-[#FEECEC] px-6 py-1.5 rounded-full text-[#EF4444] uppercase font-medium">${modalData.priority}</h2>
+                </div>`}
+
              </div>
                     `;
     cardModal.showModal()
@@ -190,7 +188,6 @@ const displayModal = (modalData) => {
 
 // Display Function
 function displayData(dataArray) {
-    // console.log(dataArray);
     cardContainer.innerHTML = "";
     
     dataArray.forEach( item => {
@@ -202,7 +199,14 @@ ${item.priority == "low" ?
                     <div id="top-status" class="flex justify-between items-center">
                     <img src="./assets/Closed-Status.png" alt="">
                     <h2 class="bg-[#EEEFF2] px-6 py-1.5 rounded-full text-[#9CA3AF] uppercase font-medium">${item.priority}</h2>
-                    </div>` : 
+                    </div>` :
+item.priority == "medium" ? 
+    `<div id="card" onclick="modalIdLoad(${item.id})" class="card card-body border-t-4 border-[#00A96E] shadow-lg space-y-3 p-4">
+        
+                    <div id="top-status" class="flex justify-between items-center">
+                    <img src="./assets/Open-Status.png" alt="">
+                    <h2 class="bg-[#FFF6D1] px-6 py-1.5 rounded-full text-[#F59E0B] uppercase font-medium">${item.priority}</h2>
+                    </div>` :
     `<div id="card" onclick="modalIdLoad(${item.id})" class="card card-body border-t-4 border-[#00A96E] shadow-lg space-y-3 p-4">
         
                     <div id="top-status" class="flex justify-between items-center">
@@ -246,7 +250,7 @@ ${item.priority == "low" ?
                             
                         </div>        
                             <div>
-                            <p class="text-[12px] text-[#64748B]">${item.assignee}</p>
+                            <p class="text-[12px] text-[#64748B]">${item.assignee === "" ? "Assin Name not Provided" : item.assignee}</p>
                             <p class="text-[12px] text-[#64748B]">${item.createdAt}</p>
                             </div>
                         </div>
