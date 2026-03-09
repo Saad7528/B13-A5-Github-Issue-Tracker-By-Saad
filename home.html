@@ -47,7 +47,7 @@
     <main class="">
         <!-- Section Tab Button -->
         <div class="w-10/12 mx-auto mt-14 p-6 bg-white card card-body shadow-2xl">
-            <div id="status-btn-container" class="space-x-2">
+            <div id="status-btn-container" class=" flex space-x-2">
                 <button id="all-btn" onclick="switchBtn('all')" class="btn cursor-pointer btn-primary w-20 md:w-28 ">All</button>
                 <button id="open-btn" onclick="switchBtn('open')" class="btn cursor-pointer w-20 md:w-28">Open</button>
                 <button id="close-btn" onclick="switchBtn('close')" class="btn cursor-pointer w-20 md:w-28">Closed</button>
@@ -58,7 +58,7 @@
         <section class="w-10/12 mx-auto mt-4 p-6 bg-white card card-body shadow-2xl">
             <!-- Issue -->
             <div class="flex justify-between items-center">
-                <div class="flex items-center gap-2">
+                <div class="flex flex-col md:flex-row items-start md:items-center gap-2">
                     <img class="p-3 bg-[#ECE4FF] rounded-full" src="./assets/Aperture.png" alt="">
                     <div>
                         <h2 class="text-xl font-semibold "> <span id="issue-count">50</span> Issues</h2>
