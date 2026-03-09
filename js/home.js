@@ -5,6 +5,18 @@ const empty = document.getElementById("empty")
 
 
 
+
+function cheakEmptyIssue() {
+    if (issueCount.innerText == "0"){
+            empty.classList.remove("hidden")
+            cardContainer.classList.add("hidden")
+        }else{
+            empty.classList.add("hidden")
+            cardContainer.classList.remove("hidden")
+        }
+}
+
+
 // Search Button 
 document.getElementById("btn-search").addEventListener('click', ()=>{
     const input = document.getElementById("search-input")
@@ -26,15 +38,7 @@ document.getElementById("btn-search").addEventListener('click', ()=>{
         issueCount.innerText = data.data.length;
         loading(false)
 
-        if (issueCount.innerText == "0"){
-            empty.classList.remove("hidden")
-            cardContainer.classList.add("hidden")
-        }else{
-            empty.classList.add("hidden")
-            cardContainer.classList.remove("hidden")
-        }    
-
-        
+        cheakEmptyIssue()
         
     }
 })
@@ -58,7 +62,6 @@ function switchBtn(btn){
     const btnName = ['all', 'open', 'close'];
     btnName.forEach(element => {
         const btnN = document.getElementById(element+"-btn")
-        // console.log(btnN);
 
         if(element === btn){
             btnN.classList.add(...activeBtn)
@@ -84,6 +87,8 @@ async function loadData() {
 
     displayData(data.data);
     loading(false)
+    cheakEmptyIssue()
+    
 }
 // Data Load Function For Open Button
 async function loadOpenData() {
@@ -96,6 +101,7 @@ async function loadOpenData() {
     
     displayData(openData);
     loading(false)
+    cheakEmptyIssue()
 }
 // Data Load Function For Closed Button
 async function loadClosedData() {
@@ -108,6 +114,7 @@ async function loadClosedData() {
     
     displayData(closeData);
     loading(false)
+    cheakEmptyIssue()
 }
 
 // Modal Show By Id
