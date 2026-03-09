@@ -7,7 +7,6 @@ loginBtn.addEventListener('click', function () {
     // console.log(userName,passWord)
 
     if(userName.value === "admin" && passWord.value === "admin123") {
-        console.log("Yes")
         alert("Log-in Success")
         window.location.assign("./home.html")
     }else{
